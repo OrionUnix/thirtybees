@@ -277,11 +277,25 @@ class ConfigurationCore extends ObjectModel
         'multilang' => true,
         'fields'    => [
             'name'          => ['type' => self::TYPE_STRING, 'validate' => 'isConfigName', 'required' => true, 'size' => 254],
-            'id_shop_group' => ['type' => self::TYPE_NOTHING, 'validate' => 'isUnsignedId'],
-            'id_shop'       => ['type' => self::TYPE_NOTHING, 'validate' => 'isUnsignedId'],
-            'value'         => ['type' => self::TYPE_STRING],
-            'date_add'      => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd'      => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'id_shop_group' => ['type' => self::TYPE_NOTHING, 'validate' => 'isUnsignedId', 'dbType' => 'int(11) unsigned'],
+            'id_shop'       => ['type' => self::TYPE_NOTHING, 'validate' => 'isUnsignedId', 'dbType' => 'int(11) unsigned'],
+            'value'         => ['type' => self::TYPE_STRING, 'size' => self::SIZE_TEXT],
+            'date_add'      => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'dbNullable' => false],
+            'date_upd'      => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'dbNullable' => false],
+        ],
+        'keys' => [
+            'configuration' => [
+                'id_shop'       => ['type' => TableKey::KEY, 'columns' => ['id_shop']],
+                'id_shop_group' => ['type' => TableKey::KEY, 'columns' => ['id_shop_group']],
+            ],
+            'configuration_kpi' => [
+                'id_shop'       => ['type' => TableKey::KEY, 'columns' => ['id_shop']],
+                'id_shop_group' => ['type' => TableKey::KEY, 'columns' => ['id_shop_group']],
+                'name'          => ['type' => TableKey::KEY, 'columns' => ['name']],
+            ],
+            'configuration_kpi_lang' => [
+                'primary' => ['type' => TableKey::PRIMARY_KEY, 'columns' => ['id_configuration_kpi', 'id_lang']],
+            ],
         ],
     ];
     /** @var array Configuration cache */

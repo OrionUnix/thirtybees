@@ -50,7 +50,12 @@ class RiskCore extends ObjectModel
         'fields'    => [
             'name'    => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isString', 'required' => true, 'size' => 20],
             'color'   => ['type' => self::TYPE_STRING, 'validate' => 'isColor', 'size' => 32],
-            'percent' => ['type' => self::TYPE_INT, 'validate' => 'isPercentage'],
+            'percent' => ['type' => self::TYPE_INT, 'validate' => 'isPercentage', 'dbType' => 'tinyint(3)', 'dbNullable' => false],
+        ],
+        'keys' => [
+            'risk_lang' => [
+                'id_risk' => ['type' => TableKey::KEY, 'columns' => ['id_risk']],
+            ],
         ],
     ];
 

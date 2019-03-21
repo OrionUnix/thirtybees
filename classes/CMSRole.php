@@ -44,8 +44,16 @@ class CMSRoleCore extends ObjectModel
         'table'   => 'cms_role',
         'primary' => 'id_cms_role',
         'fields'  => [
-            'name'   => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 50],
-            'id_cms' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
+            'name'   => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 50, 'unique' => true, 'dbNullable' => false],
+            'id_cms' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'dbNullable' => false],
+        ],
+        'keys' => [
+            'cms_role' => [
+                'primary' => ['type' => TableKey::PRIMARY_KEY, 'columns' => ['id_cms_role', 'id_cms']],
+            ],
+            'cms_role_lang' => [
+                'primary' => ['type' => TableKey::PRIMARY_KEY, 'columns' => ['id_cms_role', 'id_lang', 'id_shop']],
+            ],
         ],
     ];
     /** @var string name */

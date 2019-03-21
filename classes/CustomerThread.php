@@ -66,15 +66,25 @@ class CustomerThreadCore extends ObjectModel
         'fields'  => [
             'id_lang'     => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
             'id_contact'  => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_shop'     => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
+            'id_shop'     => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'dbDefault' => '1'],
             'id_customer' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
             'id_order'    => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
             'id_product'  => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'email'       => ['type' => self::TYPE_STRING, 'validate' => 'isEmail', 'size' => 254],
-            'token'       => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true],
-            'status'      => ['type' => self::TYPE_STRING],
-            'date_add'    => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd'    => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'email'       => ['type' => self::TYPE_STRING, 'validate' => 'isEmail', 'size' => 128, 'dbNullable' => false],
+            'token'       => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true, 'size' => 12, 'dbNullable' => true],
+            'status'      => ['type' => self::TYPE_STRING, 'values' => ['open', 'closed', 'pending1', 'pending2'], 'dbDefault' => 'open'],
+            'date_add'    => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'dbNullable' => false],
+            'date_upd'    => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'dbNullable' => false],
+        ],
+        'keys' => [
+            'customer_thread' => [
+                'id_contact'  => ['type' => TableKey::KEY, 'columns' => ['id_contact']],
+                'id_customer' => ['type' => TableKey::KEY, 'columns' => ['id_customer']],
+                'id_lang'     => ['type' => TableKey::KEY, 'columns' => ['id_lang']],
+                'id_order'    => ['type' => TableKey::KEY, 'columns' => ['id_order']],
+                'id_product'  => ['type' => TableKey::KEY, 'columns' => ['id_product']],
+                'id_shop'     => ['type' => TableKey::KEY, 'columns' => ['id_shop']],
+            ],
         ],
     ];
     protected $webserviceParameters = [

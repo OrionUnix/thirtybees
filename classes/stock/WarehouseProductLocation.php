@@ -70,6 +70,12 @@ class WarehouseProductLocationCore extends ObjectModel
             'id_product_attribute' => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId',                'required' => true],
             'id_warehouse'         => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId',                'required' => true],
         ],
+        'keys' => [
+            'warehouse_product_location' => [
+                'id_product' => ['type' => TableKey::UNIQUE_KEY, 'columns' => ['id_product', 'id_product_attribute', 'id_warehouse']],
+            ],
+        ],
+
     ];
 
     /**

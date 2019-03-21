@@ -74,12 +74,18 @@ class WarehouseCore extends ObjectModel
         'primary' => 'id_warehouse',
         'fields'  => [
             'id_address'      => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId',      'required' => true              ],
-            'reference'       => ['type' => self::TYPE_STRING, 'validate' => 'isString',          'required' => true, 'size' => 45],
+            'reference'       => ['type' => self::TYPE_STRING, 'validate' => 'isString',          'required' => true, 'size' => 32, 'dbDefault' => self::DEFAULT_NULL, 'dbNullable' => true],
             'name'            => ['type' => self::TYPE_STRING, 'validate' => 'isString',          'required' => true, 'size' => 45],
             'id_employee'     => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId',      'required' => true              ],
-            'management_type' => ['type' => self::TYPE_STRING, 'validate' => 'isStockManagement', 'required' => true              ],
+            'management_type' => ['type' => self::TYPE_STRING, 'validate' => 'isStockManagement', 'required' => true, 'values' => ['WA', 'FIFO', 'LIFO'], 'dbDefault' => 'WA'],
             'id_currency'     => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId',      'required' => true              ],
-            'deleted'         => ['type' => self::TYPE_BOOL],
+            'deleted'         => ['type' => self::TYPE_BOOL, 'dbDefault' => '0'],
+        ],
+        'keys' => [
+            'warehouse_shop' => [
+                'id_shop'      => ['type' => TableKey::KEY, 'columns' => ['id_shop']],
+                'id_warehouse' => ['type' => TableKey::KEY, 'columns' => ['id_warehouse']],
+            ],
         ],
     ];
 

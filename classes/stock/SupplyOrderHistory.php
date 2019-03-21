@@ -77,10 +77,17 @@ class SupplyOrderHistoryCore extends ObjectModel
         'fields'  => [
             'id_supply_order'    => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId', 'required' => true],
             'id_employee'        => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId', 'required' => true],
-            'employee_firstname' => ['type' => self::TYPE_STRING, 'validate' => 'isName'                          ],
-            'employee_lastname'  => ['type' => self::TYPE_STRING, 'validate' => 'isName'                          ],
+            'employee_firstname' => ['type' => self::TYPE_STRING, 'validate' => 'isName', 'size' => 32, 'dbDefault' => '', 'dbNullable' => true],
+            'employee_lastname'  => ['type' => self::TYPE_STRING, 'validate' => 'isName', 'size' => 32, 'dbDefault' => '', 'dbNullable' => true],
             'id_state'           => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId', 'required' => true],
             'date_add'           => ['type' => self::TYPE_DATE,  'validate' => 'isDate',        'required' => true],
+        ],
+        'keys' => [
+            'supply_order_history' => [
+                'id_employee'     => ['type' => TableKey::KEY, 'columns' => ['id_employee']],
+                'id_state'        => ['type' => TableKey::KEY, 'columns' => ['id_state']],
+                'id_supply_order' => ['type' => TableKey::KEY, 'columns' => ['id_supply_order']],
+            ],
         ],
     ];
 

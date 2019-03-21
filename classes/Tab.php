@@ -75,14 +75,20 @@ class TabCore extends ObjectModel
         'primary'   => 'id_tab',
         'multilang' => true,
         'fields'    => [
-            'id_parent'      => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
-            'position'       => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
+            'id_parent'      => ['type' => self::TYPE_INT, 'validate' => 'isInt', 'dbType' => 'int(11)', 'dbNullable' => false],
+            'position'       => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'dbNullable' => false],
             'module'         => ['type' => self::TYPE_STRING, 'validate' => 'isTabName', 'size' => 64],
             'class_name'     => ['type' => self::TYPE_STRING, 'required' => true, 'size' => 64],
-            'active'         => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'hide_host_mode' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'active'         => ['type' => self::TYPE_BOOL, 'validate' => 'isBool', 'dbType' => 'tinyint(1)', 'dbDefault' => '1'],
+            'hide_host_mode' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool', 'dbType' => 'tinyint(1)', 'dbDefault' => '0'],
             /* Lang fields */
             'name'           => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isTabName', 'size' => 64],
+        ],
+        'keys' => [
+            'tab' => [
+                'class_name' => ['type' => TableKey::KEY, 'columns' => ['class_name']],
+                'id_parent'  => ['type' => TableKey::KEY, 'columns' => ['id_parent']],
+            ],
         ],
     ];
 

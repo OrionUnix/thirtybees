@@ -46,10 +46,16 @@ class OrderReturnCore extends ObjectModel
         'fields'  => [
             'id_customer' => ['type' => self::TYPE_INT,     'validate' => 'isUnsignedId', 'required' => true],
             'id_order'    => ['type' => self::TYPE_INT,     'validate' => 'isUnsignedId', 'required' => true],
-            'question'    => ['type' => self::TYPE_HTML,    'validate' => 'isCleanHtml'],
-            'state'       => ['type' => self::TYPE_STRING],
-            'date_add'    => ['type' => self::TYPE_DATE,    'validate' => 'isDate'],
-            'date_upd'    => ['type' => self::TYPE_DATE,    'validate' => 'isDate'],
+            'question'    => ['type' => self::TYPE_HTML,    'validate' => 'isCleanHtml', 'size' => self::SIZE_TEXT, 'dbNullable' => false],
+            'state'       => ['type' => self::TYPE_INT, 'dbType' => 'tinyint(1) unsigned', 'dbDefault' => '1'],
+            'date_add'    => ['type' => self::TYPE_DATE,    'validate' => 'isDate', 'dbNullable' => false],
+            'date_upd'    => ['type' => self::TYPE_DATE,    'validate' => 'isDate', 'dbNullable' => false],
+        ],
+        'keys' => [
+            'order_return' => [
+                'id_order'              => ['type' => TableKey::KEY, 'columns' => ['id_order']],
+                'order_return_customer' => ['type' => TableKey::KEY, 'columns' => ['id_customer']],
+            ],
         ],
     ];
     /** @var int */

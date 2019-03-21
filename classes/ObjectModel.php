@@ -50,6 +50,20 @@ abstract class ObjectModelCore implements Core_Foundation_Database_EntityInterfa
     const TYPE_PRICE   = 9;
 
     /**
+     * List of database column sizes
+     */
+    const SIZE_MAX_VARCHAR = 255;
+    const SIZE_TEXT = 65535;
+    const SIZE_MEDIUM_TEXT = 16777215;
+    const SIZE_LONG_TEXT = 4294967295;
+
+    /**
+     * List of common database default values
+     */
+    const DEFAULT_NULL = '@@NULL';
+    const DEFAULT_CURRENT_TIMESTAMP = 'CURRENT_TIMESTAMP';
+
+    /**
      * List of data to format
      */
     const FORMAT_COMMON = 1;
@@ -1156,7 +1170,7 @@ abstract class ObjectModelCore implements Core_Foundation_Database_EntityInterfa
         }
 
         // Check field size
-        if (!in_array('size', $skip) && !empty($data['size'])) {
+        if (!in_array('size', $skip) && !empty($data['size']) && in_array($data['type'], [static::TYPE_STRING, static::TYPE_HTML])) {
             $size = $data['size'];
             if (!is_array($data['size'])) {
                 $size = ['min' => 0, 'max' => $data['size']];
@@ -1284,7 +1298,7 @@ abstract class ObjectModelCore implements Core_Foundation_Database_EntityInterfa
             }
 
             // Checking for maximum fields sizes
-            if (isset($data['size']) && !empty($value) && mb_strlen($value) > $data['size']) {
+            if (isset($data['size']) && !empty($value) && in_array($data['type'], [static::TYPE_STRING, static::TYPE_HTML]) && mb_strlen($value) > $data['size']) {
                 $errors[$field] = sprintf(
                     Tools::displayError('%1$s is too long. Maximum length: %2$d'),
                     static::displayFieldName($field, get_class($this), $htmlentities),

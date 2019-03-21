@@ -83,10 +83,16 @@ class SupplyOrderReceiptHistoryCore extends ObjectModel
             'id_supply_order_detail' => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId',  'required' => true],
             'id_supply_order_state'  => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId',  'required' => true],
             'id_employee'            => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId',  'required' => true],
-            'employee_firstname'     => ['type' => self::TYPE_STRING, 'validate' => 'isName'                           ],
-            'employee_lastname'      => ['type' => self::TYPE_STRING, 'validate' => 'isName'                           ],
+            'employee_firstname'     => ['type' => self::TYPE_STRING, 'validate' => 'isName', 'size' => 32, 'dbDefault' => '', 'dbNullable' => true],
+            'employee_lastname'      => ['type' => self::TYPE_STRING, 'validate' => 'isName', 'size' => 32, 'dbDefault' => '', 'dbNullable' => true],
             'quantity'               => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedInt', 'required' => true],
-            'date_add'               => ['type' => self::TYPE_DATE,   'validate' => 'isDate'                           ],
+            'date_add'               => ['type' => self::TYPE_DATE,   'validate' => 'isDate', 'dbNullable' => false],
+        ],
+        'keys' => [
+            'supply_order_receipt_history' => [
+                'id_supply_order_detail' => ['type' => TableKey::KEY, 'columns' => ['id_supply_order_detail']],
+                'id_supply_order_state'  => ['type' => TableKey::KEY, 'columns' => ['id_supply_order_state']],
+            ],
         ],
     ];
 

@@ -51,8 +51,8 @@ class AliasCore extends ObjectModel
         'primary' => 'id_alias',
         'fields'  => [
             'search' => ['type' => self::TYPE_STRING, 'validate' => 'isValidSearch', 'required' => true, 'size' => 255],
-            'alias'  => ['type' => self::TYPE_STRING, 'validate' => 'isValidSearch', 'required' => true, 'size' => 255],
-            'active' => ['type' => self::TYPE_BOOL,   'validate' => 'isBool'                                          ],
+            'alias'  => ['type' => self::TYPE_STRING, 'validate' => 'isValidSearch', 'required' => true, 'unique' => true, 'size' => 64],
+            'active' => ['type' => self::TYPE_BOOL,   'validate' => 'isBool', 'dbType' => 'tinyint(1)', 'dbDefault' => '1'],
         ],
     ];
 

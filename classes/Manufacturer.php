@@ -81,16 +81,21 @@ class ManufacturerCore extends ObjectModel
         'multilang' => true,
         'fields'    => [
             'name'              => ['type' => self::TYPE_STRING, 'validate' => 'isCatalogName', 'required' => true, 'size' => 64],
-            'active'            => ['type' => self::TYPE_BOOL],
-            'date_add'          => ['type' => self::TYPE_DATE],
-            'date_upd'          => ['type' => self::TYPE_DATE],
+            'active'            => ['type' => self::TYPE_BOOL, 'dbType' => 'tinyint(1)', 'dbDefault' => '0'],
+            'date_add'          => ['type' => self::TYPE_DATE, 'dbNullable' => false],
+            'date_upd'          => ['type' => self::TYPE_DATE, 'dbNullable' => false],
 
             /* Lang fields */
-            'description'       => ['type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml'],
-            'short_description' => ['type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml'],
+            'description'       => ['type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml', 'size' => self::SIZE_TEXT],
+            'short_description' => ['type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml', 'size' => self::SIZE_TEXT],
             'meta_title'        => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 128],
             'meta_description'  => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 255],
             'meta_keywords'     => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName'],
+        ],
+        'keys' => [
+            'manufacturer_shop' => [
+                'id_shop' => ['type' => TableKey::KEY, 'columns' => ['id_shop']],
+            ],
         ],
     ];
     protected $webserviceParameters = [

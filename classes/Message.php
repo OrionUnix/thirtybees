@@ -61,12 +61,20 @@ class MessageCore extends ObjectModel
         'primary' => 'id_message',
         'fields'  => [
             'message'     => ['type' => self::TYPE_STRING, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 1600],
-            'id_cart'     => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId'                                   ],
-            'id_order'    => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId'                                   ],
-            'id_customer' => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId'                                   ],
-            'id_employee' => ['type' => self::TYPE_INT,    'validate' => 'isUnsignedId'                                   ],
-            'private'     => ['type' => self::TYPE_BOOL,   'validate' => 'isBool'                                         ],
-            'date_add'    => ['type' => self::TYPE_DATE,   'validate' => 'isDate'                                         ],
+            'id_cart'     => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
+            'id_order'    => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'dbNullable' => false],
+            'id_customer' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'dbNullable' => false],
+            'id_employee' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
+            'private'     => ['type' => self::TYPE_BOOL, 'validate' => 'isBool', 'dbDefault' => '1'],
+            'date_add'    => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'dbNullable' => false],
+        ],
+        'keys' => [
+            'message' => [
+                'id_cart'       => ['type' => TableKey::KEY, 'columns' => ['id_cart']],
+                'id_customer'   => ['type' => TableKey::KEY, 'columns' => ['id_customer']],
+                'id_employee'   => ['type' => TableKey::KEY, 'columns' => ['id_employee']],
+                'message_order' => ['type' => TableKey::KEY, 'columns' => ['id_order']],
+            ],
         ],
     ];
 
